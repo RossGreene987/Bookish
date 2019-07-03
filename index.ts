@@ -57,12 +57,16 @@ function main() {
     const port = 3000;
     const app = express();
 
+
+
     app.use(bodyParser.urlencoded({extended:false}));
     app.use(bodyParser.json());
 
     app.get('/login', function(req, res) {
-        res.sendFile(__dirname + "/" + "index.html");
+        res.sendFile(__dirname + "/frontend/" + "index.html");
     });
+
+    app.use(express.static('frontend'));
 
     // app.post('/process_get', passport.authenticate('local', { successRedirect: '/',
     //     failureRedirect: '/login' }));
