@@ -2,7 +2,8 @@
 const request = require('request');
 const express = require('express');
 const pgp = require('pg-promise')(/* options */);
-const db = pgp('postgres://Bookish:ZSE$4rfv@localhost:5432/Bookish');
+const link = 'postgres://Bookish:ZSE$4rfv@localhost:5432/Bookish'
+const db = pgp(link);
 
 class Book {
     author: string;
@@ -33,12 +34,13 @@ function main() {
 
     app.get("/bookish", (req, res) => {
         //let inqueery = req.query.inqueery;
-        db.any('SELECT * FROM public."Books"'
-        ).then((catalogue) => {
+        db.any('SELECT * FROM public."Books"')
+            .then((catalogue) => {
             let bookList = listBooksFromCatalogue(catalogue);
             res.send(bookList)
         }, (error) => {console.log(error)});
     } );
+
     app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 }
 

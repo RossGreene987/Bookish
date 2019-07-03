@@ -12,19 +12,6 @@ var Book = /** @class */ (function () {
     }
     return Book;
 }());
-// function getAllBooks(){
-// //     let list;
-// //     return db.any('SELECT * FROM public."Books"').then(
-// //         (data) => {
-// //             list = data.map((book) => {
-// //                 return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
-// //             });
-// //             return list;
-// //         },
-// //         (error) => { return error}
-// //
-// //     );
-// // }
 function listBooksFromCatalogue(catalogue) {
     var bookList = catalogue.map(function (book) {
         return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library);
@@ -35,19 +22,10 @@ function main() {
     var app = express();
     var port = 3000;
     //app.use(express.static('frontend'));
-    // let list;
-    // db.any('SELECT * FROM public."Books"').then(
-    //     (data) => {
-    //         list = data.map((book) => {
-    //             return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
-    //         });
-    //         console.log( list);
-    //     }, (error) => {return error});
     app.get("/bookish", function (req, res) {
         //let inqueery = req.query.inqueery;
-        // res.send("Hello World");
-        // res.send(db.any('SELECT * FROM public."Books"', 'John'));
-        db.any('SELECT * FROM public."Books"').then(function (catalogue) {
+        db.any('SELECT * FROM public."Books"')
+            .then(function (catalogue) {
             var bookList = listBooksFromCatalogue(catalogue);
             res.send(bookList);
         }, function (error) { console.log(error); });
