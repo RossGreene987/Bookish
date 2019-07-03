@@ -12,23 +12,45 @@ var Book = /** @class */ (function () {
     }
     return Book;
 }());
-function getAllBooks() {
-    var list;
-    db.any('SELECT * FROM public."Books"').then(function (data) {
-        list = data.map(function (book) {
-            return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library);
-        });
-        return list;
-    }, function (error) { return console.log(error); });
+// function getAllBooks(){
+// //     let list;
+// //     return db.any('SELECT * FROM public."Books"').then(
+// //         (data) => {
+// //             list = data.map((book) => {
+// //                 return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
+// //             });
+// //             return list;
+// //         },
+// //         (error) => { return error}
+// //
+// //     );
+// // }
+function listBooksFromCatalogue(catalogue) {
+    var bookList = catalogue.map(function (book) {
+        return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library);
+    });
+    return bookList;
 }
 function main() {
     var app = express();
     var port = 3000;
     //app.use(express.static('frontend'));
-    app.get('/bookish', function (req, res) {
+    // let list;
+    // db.any('SELECT * FROM public."Books"').then(
+    //     (data) => {
+    //         list = data.map((book) => {
+    //             return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
+    //         });
+    //         console.log( list);
+    //     }, (error) => {return error});
+    app.get("/bookish", function (req, res) {
         //let inqueery = req.query.inqueery;
-        res.send(getAllBooks());
+        // res.send("Hello World");
         // res.send(db.any('SELECT * FROM public."Books"', 'John'));
+        db.any('SELECT * FROM public."Books"').then(function (catalogue) {
+            var bookList = listBooksFromCatalogue(catalogue);
+            res.send(bookList);
+        }, function (error) { console.log(error); });
     });
     app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
 }

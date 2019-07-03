@@ -19,32 +19,26 @@ class Book {
     }
 }
 
-function getAllBooks(){
-    let list;
-    db.any('SELECT * FROM public."Books"').then(
-        (data) => {
-            list = data.map((book) => {
-                return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
-            });
-            return list;
-        },
-        (error) => { return error}
-
-    );
+function listBooksFromCatalogue(catalogue){
+    let bookList = catalogue.map((book) => {
+        return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
+    });
+    return bookList;
 }
 
 function main() {
-
     const app = express();
     const port = 3000;
     //app.use(express.static('frontend'));
 
     app.get("/bookish", (req, res) => {
         //let inqueery = req.query.inqueery;
-        res.send(getAllBooks())
-        // res.send(db.any('SELECT * FROM public."Books"', 'John'));
+        db.any('SELECT * FROM public."Books"'
+        ).then((catalogue) => {
+            let bookList = listBooksFromCatalogue(catalogue);
+            res.send(bookList)
+        }, (error) => {console.log(error)});
     } );
-
     app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 }
 
