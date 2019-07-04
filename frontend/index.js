@@ -1,5 +1,3 @@
-
-
 function fetchData(){
     let xhttp = new XMLHttpRequest();
     let username = document.getElementById("username").value;
@@ -8,10 +6,11 @@ function fetchData(){
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     xhttp.onload = function () {
-        console.log(this.responseText);
+        let response = JSON.parse(xhttp.response);
+        if (response.redirect) {
+            window.location.href = "/Bookish";
+        }
     };
+
     xhttp.send(`username=${username}&password=${password}`);
-
-
-
 }
