@@ -50,12 +50,13 @@ function main() {
     app.get('/Bookish', function (req, res) {
         res.sendFile(__dirname + "/frontend/" + "Bookish.html");
     });
-    app.get("/Bookish", function (req, res) {
+    app.get("/Catalogue", function (req, res) {
         //let inqueery = req.query.inqueery;
         db.any('SELECT * FROM public."Books"')
             .then(function (catalogue) {
             var bookList = listBooksFromCatalogue(catalogue);
             res.send(bookList);
+            console.log(bookList);
         }, function (error) { console.log(error); });
     });
     // app.post('');

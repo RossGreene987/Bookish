@@ -67,12 +67,13 @@ function main() {
         }
     );
 
-    app.get("/Bookish", (req, res) => {
+    app.get("/Catalogue", (req, res) => {
         //let inqueery = req.query.inqueery;
         db.any('SELECT * FROM public."Books"')
             .then((catalogue) => {
                 let bookList = listBooksFromCatalogue(catalogue);
-                res.send(bookList)
+                res.send(bookList);
+                console.log(bookList);
             }, (error) => {console.log(error)});
     } );
 
