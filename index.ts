@@ -80,6 +80,7 @@ function main() {
             }, (error) => res.send(error));
     });
 
+    // handles adding a new Book
     app.post('/process_addBook', function(req, res){
         let book = new Book(req.body.author, req.body.copiesAvailable, req.body.ISBN, req.body.bookName, req.body.copiesInLibrary);
         db.any(`INSERT INTO public."Books" VALUES ('${book.author}', '${book.copiesAvailable}', '${book.ISBN}', '${book.title}', '${book.numberInLibrary}');`)
@@ -87,7 +88,24 @@ function main() {
                 res.send({success: true});
             }, (error) => res.send({success: false, Error: error}));
 
+    });
 
+    // handles fetching user's loans
+    app.post('/process_fetchLoans', function(req,res){
+        console.log(req.body);
+        let id = jwt.verify(req.body.token, secret).foo;
+        console.log(id);
+
+        return getLoanData(id, res).then(
+            (loanData) => {
+                loanData.forEach(loan => {
+                    db.any(`SELECT * FROM public."User" WHERE "Username" = '${loan.Book_ID}';`)
+                }
+            } ,
+            () => {
+                console.log("hi");
+            }
+        );
     });
 
     app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -130,4 +148,14 @@ function listBooksFromCatalogue(catalogue){
         return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
     });
     return bookList;
+}
+
+function getLoanData(id, res) {
+    return db.any(`SELECT * FROM public."Loans" WHERE "User_ID" = '${id}';`)
+        .then((loans) => {
+                return loans;
+            },
+            (error) => {
+                throw error;
+            });
 }

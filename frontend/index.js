@@ -15,6 +15,5 @@ function fetchData(){
             window.location.href = `/Bookish?token=${response.token}`;
         }
     };
-
     xhttp.send(`username=${username}&password=${password}`);
 }

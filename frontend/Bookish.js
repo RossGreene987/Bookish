@@ -1,7 +1,8 @@
 let bookishToken = sessionStorage.getItem("token");
+let xhttp;
 
 function fetchCatalogue() {
-    let xhttp = new XMLHttpRequest();
+    xhttp = new XMLHttpRequest();
     xhttp.open('POST', '/process_fetchCatalogue', true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.onload = function () {
@@ -18,9 +19,19 @@ function fetchCatalogue() {
     xhttp.send();
 }
 
+function showMyLoans(){
+    xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/process_fetchLoans', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onload = function () {
+        let loans = JSON.parse(xhttp.response);
+        console.log(loans);
+    };
+    xhttp.send(`token=${bookishToken}`);
+}
 
 function addBook(){
-    let xhttp = new XMLHttpRequest();
+    xhttp = new XMLHttpRequest();
     let bookName = document.getElementById("nameOfBook").value;
     let author = document.getElementById("author").value;
     let ISBN = document.getElementById("ISBN").value;

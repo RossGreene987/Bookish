@@ -64,12 +64,24 @@ function main() {
             res.send(bookList);
         }, function (error) { return res.send(error); });
     });
+    // handles adding a new Book
     app.post('/process_addBook', function (req, res) {
         var book = new Book(req.body.author, req.body.copiesAvailable, req.body.ISBN, req.body.bookName, req.body.copiesInLibrary);
         db.any("INSERT INTO public.\"Books\" VALUES ('" + book.author + "', '" + book.copiesAvailable + "', '" + book.ISBN + "', '" + book.title + "', '" + book.numberInLibrary + "');")
             .then(function () {
             res.send({ success: true });
         }, function (error) { return res.send({ success: false, Error: error }); });
+    });
+    // handles fetching user's loans
+    app.post('/process_fetchLoans', function (req, res) {
+        console.log(req.body);
+        var id = jwt.verify(req.body.token, secret).foo;
+        console.log(id);
+        return getLoanData(id, res).then(function (loanData) {
+            loanData.forEach(function (loan) { return console.log("I have a loan: " + loan.Book_ID); });
+            // db.any(`SELECT * FROM public."User" WHERE "Username" = '${username}';`)
+            // console.log(loanData);
+        });
     });
     app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
 }
@@ -108,4 +120,12 @@ function listBooksFromCatalogue(catalogue) {
         return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library);
     });
     return bookList;
+}
+function getLoanData(id, res) {
+    return db.any("SELECT * FROM public.\"Loans\" WHERE \"User_ID\" = '" + id + "';")
+        .then(function (loans) {
+        return loans;
+    }, function (error) {
+        throw error;
+    });
 }
