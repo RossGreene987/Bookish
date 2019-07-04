@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var pgp = require('pg-promise')( /* options */);
 var link = 'postgres://Bookish:ZSE$4rfv@localhost:5432/Bookish';
 var db = pgp(link);
+var secret = 'shhhhh';
 var Book = /** @class */ (function () {
     function Book(author, copiesAvailable, ISBN, title, numberInLibrary) {
         this.author = author;
@@ -48,19 +49,33 @@ function main() {
     });
     // handles mainsite
     app.get('/Bookish', function (req, res) {
-        res.sendFile(__dirname + "/frontend/" + "Bookish.html");
+        if (validateToken(req)) {
+            res.sendFile(__dirname + "/frontend/" + "Bookish.html");
+        }
+        else {
+            res.redirect('/login');
+        }
     });
-    app.get("/Catalogue", function (req, res) {
-        //let inqueery = req.query.inqueery;
+    // handles Catalogue
+    app.post('/process_fetchCatalogue', function (req, res) {
         db.any('SELECT * FROM public."Books"')
             .then(function (catalogue) {
             var bookList = listBooksFromCatalogue(catalogue);
             res.send(bookList);
-            console.log(bookList);
-        }, function (error) { console.log(error); });
+        }, function (error) { return res.send(error); });
     });
-    // app.post('');
     app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
+}
+function validateToken(req) {
+    var token = req.query.token;
+    try {
+        var decoded = jwt.verify(token, secret);
+        console.log(decoded.foo);
+        return Number.isInteger(decoded.foo);
+    }
+    catch (_a) {
+        return false;
+    }
 }
 function validate(username, password) {
     var token;
@@ -70,7 +85,8 @@ function validate(username, password) {
             throw Error("Username not found");
         }
         if (user[0].Password === password) {
-            token = jwt.sign({ foo: user[0].User_ID }, 'shhhhh');
+            token = jwt.sign({ foo: user[0].User_ID }, secret);
+            console.log(token);
             return token;
         }
         else {
@@ -86,58 +102,3 @@ function listBooksFromCatalogue(catalogue) {
     });
     return bookList;
 }
-// passport.use(new LocalStrategy(
-//     function(username, password, done) {
-//
-//
-//
-//         User.findOne({ username: username }, function(err, user) {
-//             if (err) { return done(err); }
-//             if (!user) {
-//                 return done(null, false, { message: 'Incorrect username.' });
-//             }
-//             if (!user.validPassword(password)) {
-//                 return done(null, false, { message: 'Incorrect password.' });
-//             }
-//             return done(null, user);
-//         });
-//     }
-// ));
-// passport.use(new LocalStrategy(
-//     function(username, password, done) {
-//
-//
-//
-//         User.findOne({ username: username }, function(err, user) {
-//             if (err) { return done(err); }
-//             if (!user) {
-//                 return done(null, false, { message: 'Incorrect username.' });
-//             }
-//             if (!user.validPassword(password)) {
-//                 return done(null, false, { message: 'Incorrect password.' });
-//             }
-//             return done(null, user);
-//         });
-//     }
-// ));
-// var decoded = jwt.verify(token, 'shhhhh');
-// console.log(decoded.foo);
-// const passport = require('passport')
-//     , LocalStrategy = require('passport-local').Strategy;
-// function listBooksFromCatalogue(catalogue){
-//     let bookList = catalogue.map((book) => {
-//         return new Book(book.Author, book.Copies_Available, book.ISBN, book.Title, book.Number_in_Library)
-//     });
-//     return bookList;
-// }
-//
-//
-//
-// app.get("/Bookish", (req, res) => {
-//     //let inqueery = req.query.inqueery;
-//     db.any('SELECT * FROM public."Books"')
-//         .then((catalogue) => {
-//         let bookList = listBooksFromCatalogue(catalogue);
-//         res.send(bookList)
-//     }, (error) => {console.log(error)});
-// } );

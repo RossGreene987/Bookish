@@ -8,7 +8,11 @@ function fetchData(){
     xhttp.onload = function () {
         let response = JSON.parse(xhttp.response);
         if (response.redirect) {
-            window.location.href = "/Bookish";
+            sessionStorage.SessionName = "SessionData" ;
+
+            sessionStorage.setItem("token",response.token);
+
+            window.location.href = `/Bookish?token=${response.token}`;
         }
     };
 
