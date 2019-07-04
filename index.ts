@@ -80,6 +80,16 @@ function main() {
             }, (error) => res.send(error));
     });
 
+    app.post('/process_addBook', function(req, res){
+        let book = new Book(req.body.author, req.body.copiesAvailable, req.body.ISBN, req.body.bookName, req.body.copiesInLibrary);
+        db.any(`INSERT INTO public."Books" VALUES ('${book.author}', '${book.copiesAvailable}', '${book.ISBN}', '${book.title}', '${book.numberInLibrary}');`)
+            .then(() => {
+                res.send({success: true});
+            }, (error) => res.send({success: false, Error: error}));
+
+
+    });
+
     app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 }
 

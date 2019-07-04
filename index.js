@@ -64,6 +64,13 @@ function main() {
             res.send(bookList);
         }, function (error) { return res.send(error); });
     });
+    app.post('/process_addBook', function (req, res) {
+        var book = new Book(req.body.author, req.body.copiesAvailable, req.body.ISBN, req.body.bookName, req.body.copiesInLibrary);
+        db.any("INSERT INTO public.\"Books\" VALUES ('" + book.author + "', '" + book.copiesAvailable + "', '" + book.ISBN + "', '" + book.title + "', '" + book.numberInLibrary + "');")
+            .then(function () {
+            res.send({ success: true });
+        }, function (error) { return res.send({ success: false, Error: error }); });
+    });
     app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
 }
 function validateToken(req) {
