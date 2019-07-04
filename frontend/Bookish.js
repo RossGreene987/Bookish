@@ -26,6 +26,10 @@ function showMyLoans(){
     xhttp.onload = function () {
         let loans = JSON.parse(xhttp.response);
         console.log(loans);
+
+        let string = "<h2>Results</h2> \n"
+        document.getElementById("loans").innerHTML = string
+
     };
     xhttp.send(`token=${bookishToken}`);
 }

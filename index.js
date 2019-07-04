@@ -17,6 +17,13 @@ var Book = /** @class */ (function () {
     }
     return Book;
 }());
+var Loan = /** @class */ (function () {
+    function Loan(title, returnDate) {
+        this.title = title;
+        this.returnDate = returnDate;
+    }
+    return Loan;
+}());
 main();
 function main() {
     var port = 3000;
@@ -73,14 +80,11 @@ function main() {
         }, function (error) { return res.send({ success: false, Error: error }); });
     });
     // handles fetching user's loans
-    app.post('/process_fetchLoans', function (req, res) {
-        console.log(req.body);
+    app.post('/process_fetchLoans', function (req, res, next) {
         var id = jwt.verify(req.body.token, secret).foo;
-        console.log(id);
-        return getLoanData(id, res).then(function (loanData) {
-            loanData.forEach(function (loan) { return console.log("I have a loan: " + loan.Book_ID); });
-            // db.any(`SELECT * FROM public."User" WHERE "Username" = '${username}';`)
-            // console.log(loanData);
+        getLoanData(id, res)
+            .then(function (data) {
+            return res.send(data.map(function (bookObject) { return new Loan(bookObject.Title, bookObject.Return_Date); }))["catch"](next);
         });
     });
     app.listen(port, function () { return console.log("Example app listening on port " + port + "!"); });
@@ -122,10 +126,5 @@ function listBooksFromCatalogue(catalogue) {
     return bookList;
 }
 function getLoanData(id, res) {
-    return db.any("SELECT * FROM public.\"Loans\" WHERE \"User_ID\" = '" + id + "';")
-        .then(function (loans) {
-        return loans;
-    }, function (error) {
-        throw error;
-    });
+    return db.any("SELECT * FROM public.\"Loans\"\n            INNER JOIN \"Book_Instances\" ON \"Loans\".\"Book_ID\" = \"Book_Instances\".\"Book_ID\"\n            INNER JOIN \"Books\" ON \"Book_Instances\".\"ISBN\" = \"Books\".\"ISBN\"\n            WHERE \"User_ID\" = '" + id + "';");
 }

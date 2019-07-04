@@ -23,7 +23,18 @@ class Book {
     }
 }
 
+class Loan {
+    title: string;
+    returnDate: string;
+    constructor(title, returnDate){
+        this.title = title;
+        this.returnDate = returnDate;
+    }
+}
+
 main();
+
+
 
 function main() {
     const port = 3000;
@@ -91,21 +102,13 @@ function main() {
     });
 
     // handles fetching user's loans
-    app.post('/process_fetchLoans', function(req,res){
-        console.log(req.body);
+    app.post('/process_fetchLoans', function(req,res, next){
         let id = jwt.verify(req.body.token, secret).foo;
-        console.log(id);
 
-        return getLoanData(id, res).then(
-            (loanData) => {
-                loanData.forEach(loan => {
-                    db.any(`SELECT * FROM public."User" WHERE "Username" = '${loan.Book_ID}';`)
-                }
-            } ,
-            () => {
-                console.log("hi");
-            }
-        );
+        getLoanData(id, res)
+            .then((data) =>
+                res.send(data.map((bookObject) => new Loan(bookObject.Title, bookObject.Return_Date))
+            ).catch(next));
     });
 
     app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -151,11 +154,9 @@ function listBooksFromCatalogue(catalogue){
 }
 
 function getLoanData(id, res) {
-    return db.any(`SELECT * FROM public."Loans" WHERE "User_ID" = '${id}';`)
-        .then((loans) => {
-                return loans;
-            },
-            (error) => {
-                throw error;
-            });
+    return db.any(`SELECT * FROM public."Loans"
+            INNER JOIN "Book_Instances" ON "Loans"."Book_ID" = "Book_Instances"."Book_ID"
+            INNER JOIN "Books" ON "Book_Instances"."ISBN" = "Books"."ISBN"
+            WHERE "User_ID" = '${id}';`);
 }
+

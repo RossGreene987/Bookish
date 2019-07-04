@@ -4,7 +4,6 @@
     <list default="true" id="60ceecd9-a42d-41b5-8f87-d58b23c6cb69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/frontend/Bookish.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Bookish.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/Bookish.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Bookish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/index.ts" afterDir="false" />
     </list>
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="886">
-              <caret line="160" column="1" lean-forward="true" selection-start-line="160" selection-start-column="1" selection-end-line="160" selection-end-column="1" />
+            <state relative-caret-position="495">
+              <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
               <folding>
                 <element signature="e#1035#1105#0" />
                 <element signature="e#1155#1771#0" />
@@ -31,8 +30,9 @@
                 <element signature="e#1370#1540#0" />
                 <element signature="e#1842#1918#0" />
                 <element signature="e#2100#2108#0" />
-                <element signature="e#2413#2849#0" />
+                <element signature="e#3152#3414#0" />
                 <element signature="e#2464#2472#0" />
+                <element signature="n#!!block;n#validate#0" />
                 <element signature="n#!!block;n#listBooksFromCatalogue#0" />
               </folding>
             </state>
@@ -42,17 +42,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/Bookish.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="28" column="6" lean-forward="true" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+            <state relative-caret-position="476">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/index.js">
+        <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            <state relative-caret-position="223">
+              <caret line="88" column="7" lean-forward="true" selection-start-line="88" selection-start-column="7" selection-end-line="88" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -103,9 +103,9 @@
         <option value="$PROJECT_DIR$/frontend/login.ts" />
         <option value="$PROJECT_DIR$/frontend/index.html" />
         <option value="$PROJECT_DIR$/frontend/index.js" />
+        <option value="$PROJECT_DIR$/index.ts" />
         <option value="$PROJECT_DIR$/frontend/Bookish.html" />
         <option value="$PROJECT_DIR$/frontend/Bookish.js" />
-        <option value="$PROJECT_DIR$/index.ts" />
       </list>
     </option>
   </component>
@@ -131,6 +131,11 @@
               <item name="Bookish" type="b2602c69:ProjectViewProjectNode" />
               <item name="Bookish" type="462c0819:PsiDirectoryNode" />
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Bookish" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Bookish" type="462c0819:PsiDirectoryNode" />
+              <item name="index.ts" type="620a8d5e:NestingTreeNode" />
             </path>
           </expand>
           <select />
@@ -187,13 +192,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53813000" />
+    <option name="totallyTimeSpent" value="60231000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-649" y="-1200" width="1327" height="1166" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.053670086" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26282558" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -298,10 +303,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/index.html">
+    <entry file="file://$PROJECT_DIR$/frontend/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        <state relative-caret-position="272">
+          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -312,24 +317,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/index.js">
+    <entry file="file://$PROJECT_DIR$/frontend/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        <state relative-caret-position="238">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="88" column="7" lean-forward="true" selection-start-line="88" selection-start-column="7" selection-end-line="88" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/Bookish.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="28" column="6" lean-forward="true" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+        <state relative-caret-position="476">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="886">
-          <caret line="160" column="1" lean-forward="true" selection-start-line="160" selection-start-column="1" selection-end-line="160" selection-end-column="1" />
+        <state relative-caret-position="495">
+          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
           <folding>
             <element signature="e#1035#1105#0" />
             <element signature="e#1155#1771#0" />
@@ -337,8 +349,9 @@
             <element signature="e#1370#1540#0" />
             <element signature="e#1842#1918#0" />
             <element signature="e#2100#2108#0" />
-            <element signature="e#2413#2849#0" />
+            <element signature="e#3152#3414#0" />
             <element signature="e#2464#2472#0" />
+            <element signature="n#!!block;n#validate#0" />
             <element signature="n#!!block;n#listBooksFromCatalogue#0" />
           </folding>
         </state>
